@@ -1,0 +1,25 @@
+body,
+button {
+  font-family: monospace;
+}
+
+.playingCards .card {
+  font-family: 'Arbutus Slab', serif;
+}
+
+#controlButtons {
+  margin-bottom: 30px;
+}
+
+.playerName {
+  margin-top: 30px;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+#rules {
+  margin-top: 60px;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
