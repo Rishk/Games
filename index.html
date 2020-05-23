@@ -89,16 +89,21 @@
         randomCard() {
           return this.deck.splice(this.randomIndex(this.deck.length), 1)[0];
         },
-        resetDeck() {
+        resetDecks() {
+          let numDecks = Math.ceil(this.numCards * this.players.length / 52);
+
           this.deck = [];
-          this.suits.forEach(suit => {
-            this.ranks.forEach(rank => {
-              this.deck.push(new Card(suit, rank));
+          while (numDecks > 0) {
+            this.suits.forEach(suit => {
+              this.ranks.forEach(rank => {
+                this.deck.push(new Card(suit, rank));
+              });
             });
-          });
+            numDecks--;
+          }
         },
         reset() {
-          this.resetDeck();
+          this.resetDecks();
           this.players.forEach(player => {
             Vue.set(player, 'cards', [this.randomCard()]);
           });
