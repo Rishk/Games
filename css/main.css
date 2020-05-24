@@ -17,9 +17,17 @@ button {
   font-size: 15px;
 }
 
-#rules {
-  margin-top: 60px;
+.container {
+  margin-top: 30px;
   max-width: 300px;
   margin-left: auto;
   margin-right: auto;
+}
+
+#settingsForm {
+  padding-left: 40px;
+}
+
+#settingsForm .setting {
+  margin-bottom: 10px;
 }

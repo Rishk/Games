@@ -1,3 +1,6 @@
+const DEFAULT_CARDS_PER_PLAYER = 6;
+const DEFAULT_PLAYERS = ["Player 1", "Player 2"];
+
 function Card(suit, rank) {
   this.suit = suit;
   this.rank = rank;
@@ -9,22 +12,36 @@ function Card(suit, rank) {
   }
 }
 
+function Player(name) {
+  this.name = name;
+  this.cards = [];
+}
+
+window.onload = function() {
+  // https://www.w3schools.com/howto/howto_js_rangeslider.asp
+  let cardsPerPlayerInput = document.getElementById("cardsPerPlayerInput");
+  let cardsPerPlayerCounter = document.getElementById("cardsPerPlayer");
+  cardsPerPlayerInput.value = DEFAULT_CARDS_PER_PLAYER;
+  cardsPerPlayerCounter.innerHTML = DEFAULT_CARDS_PER_PLAYER;
+
+  cardsPerPlayerInput.oninput = function() {
+    cardsPerPlayerCounter.innerHTML = cardsPerPlayerInput.value;
+  }
+
+  let playersInput = document.getElementById("playerNamesInput");
+  playersInput.value = DEFAULT_PLAYERS.join("\n");
+}
+
 var app = new Vue({
   el: '#app',
   data: {
-    numCards: 6,
+    numCards: DEFAULT_CARDS_PER_PLAYER,
     ranks: ['a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q',
       'k'
     ],
     suits: ['diams', 'hearts', 'spades', 'clubs'],
     deck: [],
-    players: [{
-      name: 'Player 1',
-      cards: []
-    }, {
-      name: 'Player 2',
-      cards: []
-    }],
+    players: DEFAULT_PLAYERS.map(name => new Player(name)),
     currPlayer: null,
     gameOver: false,
     winner: null,
@@ -59,6 +76,20 @@ var app = new Vue({
       });
       this.currPlayer = this.randomIndex(this.players.length);
       this.gameOver = false;
+    },
+    updateSettings(e) {
+      e.preventDefault();
+
+      let cardsPerPlayerInput = document.getElementById("cardsPerPlayerInput");
+      this.numCards = cardsPerPlayerInput.value;
+
+      let playersInput = document.getElementById("playerNamesInput");
+      Vue.set(this, 'players', []);
+      playersInput.value.trim().split("\n").forEach(playerName => {
+        Vue.set(this.players, this.players.length, new Player(playerName))
+      });
+
+      this.reset();
     },
     cardsRemaining(player) {
       return this.numCards - player.cards.length;
@@ -120,11 +151,12 @@ var app = new Vue({
         return `Current Player: <u>${player.name}</u>`;
       }
 
+      let players = this.players.length == 1 ? "You" : "All players";
       if (this.winner == null) {
-        return "Game over... Both players lost &#x1F622;";
+        return `Game over... ${players} lost &#x1F622;`;
       }
 
-      return `Game over... <u>${this.winner.name}</u> wins! &#x1F3C6;`;
+      return `Game over... <u>${this.winner.name}</u> won! &#x1F3C6;`;
     }
   }
 });

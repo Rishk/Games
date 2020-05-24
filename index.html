@@ -34,7 +34,7 @@
         <div v-for="_ in cardsRemaining(player)" class="card back">*</div>
       </div>
     </div>
-    <div id="rules">
+    <div class="container">
       <p>Rules:
         <ul>
           <li>The rank ordering is:
@@ -46,6 +46,17 @@
             card correctly to win.</li>
         </ul>
       </p>
+    </div>
+    <div class="container">
+      <p>Settings:</p>
+      <form id="settingsForm" @submit="updateSettings">
+        <label>Cards per Player: <span id="cardsPerPlayer"></span></label><br>
+        <input id="cardsPerPlayerInput" class="setting" type="range" min="1"
+          max="10"><br>
+        <label>Players:</label><br>
+        <textarea id="playerNamesInput" class="setting" rows="3"></textarea><br>
+        <button>Update</button>
+      </form>
     </div>
   </div>
 

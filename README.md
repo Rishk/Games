@@ -1,15 +1,14 @@
 # Higher or Lower :black_joker:
 
-Two-player card game built using Vue.js.
+Multiplayer card game built using Vue.js.
 
 The rules can be found on the [site](https://higherorlower.rishk.me).
 
-Todo:
-- Add field for users to change the number of cards per player.
-- Add field for users to configure the number of players and their names.
+Supports a customisable number of players and cards per player.
 
-Both only require front-end changes as the logic already supports any number
-of cards or players.
+Todo:
+ - Add scores for each player.
+ - Add dark mode.
 
 Playing Card Design:
 [CSS-Playing-Cards](http://selfthinker.github.com/CSS-Playing-Cards/)
