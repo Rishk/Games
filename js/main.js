@@ -15,6 +15,7 @@ function Card(suit, rank) {
 function Player(name) {
   this.name = name;
   this.cards = [];
+  this.score = 0;
 }
 
 window.onload = function() {
@@ -140,6 +141,7 @@ var app = new Vue({
         // Player has correctly guessed the final card.
         this.gameOver = true;
         this.winner = this.players[this.currPlayer];
+        this.winner.score++;
         return;
       }
 

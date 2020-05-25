@@ -7,8 +7,8 @@ The rules can be found on the [site](https://higherorlower.rishk.me).
 Supports a customisable number of players and cards per player.
 
 Todo:
- - Add scores for each player.
  - Add dark mode.
+ - Save settings in local storage.
 
 Playing Card Design:
 [CSS-Playing-Cards](http://selfthinker.github.com/CSS-Playing-Cards/)

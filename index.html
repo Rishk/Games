@@ -26,7 +26,9 @@
         <button v-on:click="reset()">Reset</button>
       </div>
       <div v-for="player in players" class="playingCards simpleCards">
-        <p class="playerName">{{ player.name }}</P>
+        <p class="playerName">
+          <b>{{ player.name }}</b>, Score: {{ player.score }}
+        </p>
         <div v-for="card in player.cards" class="card" :class="card.getClass()">
           <span class="rank">{{ card.rank.toUpperCase() }}</span>
           <span class="suit" v-html="card.symbol()"></span>
