@@ -87,8 +87,15 @@ var app = new Vue({
       let playersInput = document.getElementById("playerNamesInput");
       Vue.set(this, 'players', []);
       playersInput.value.trim().split("\n").forEach(playerName => {
-        Vue.set(this.players, this.players.length, new Player(playerName))
+        Vue.set(this.players, this.players.length, new Player(playerName));
       });
+
+      let darkModeInput = document.getElementById("darkModeInput");
+      if (darkModeInput.checked) {
+        document.body.classList.add('darkMode');
+      } else {
+        document.body.classList.remove('darkMode');
+      }
 
       this.reset();
     },

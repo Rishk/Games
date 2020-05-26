@@ -3,6 +3,15 @@ button {
   font-family: monospace;
 }
 
+body.darkMode, .darkMode button, .darkMode textarea {
+  background-color: #333333;
+  color: #0f0;
+}
+
+.darkMode button {
+  border-color: #0f0;
+}
+
 .playingCards .card {
   font-family: 'Arbutus Slab', serif;
 }
