@@ -1,5 +1,8 @@
-const DEFAULT_CARDS_PER_PLAYER = 6;
-const DEFAULT_PLAYERS = ["Player 1", "Player 2"];
+const DEFAULT_SETTINGS = {
+  numCards: 6,
+  players: ["Player 1", "Player 2"],
+  darkMode: false
+}
 
 function Card(suit, rank) {
   this.suit = suit;
@@ -18,34 +21,47 @@ function Player(name) {
   this.score = 0;
 }
 
+function getSetting(setting) {
+  let storedSetting = localStorage.getItem(setting);
+  if (storedSetting === null) {
+    return DEFAULT_SETTINGS[setting];
+  }
+  return JSON.parse(storedSetting);
+}
+
 window.onload = function() {
   // https://www.w3schools.com/howto/howto_js_rangeslider.asp
+  let cardsPerPlayer = getSetting('numCards');
   let cardsPerPlayerInput = document.getElementById("cardsPerPlayerInput");
   let cardsPerPlayerCounter = document.getElementById("cardsPerPlayer");
-  cardsPerPlayerInput.value = DEFAULT_CARDS_PER_PLAYER;
-  cardsPerPlayerCounter.innerHTML = DEFAULT_CARDS_PER_PLAYER;
+  cardsPerPlayerInput.value = cardsPerPlayer;
+  cardsPerPlayerCounter.innerHTML = cardsPerPlayer;
 
   cardsPerPlayerInput.oninput = function() {
     cardsPerPlayerCounter.innerHTML = cardsPerPlayerInput.value;
   }
 
   let playersInput = document.getElementById("playerNamesInput");
-  playersInput.value = DEFAULT_PLAYERS.join("\n");
+  playersInput.value = getSetting('players').join("\n");
+
+  let darkModeInput = document.getElementById("darkModeInput");
+  darkModeInput.checked = getSetting('darkMode');
 }
 
 var app = new Vue({
   el: '#app',
   data: {
-    numCards: DEFAULT_CARDS_PER_PLAYER,
+    numCards: getSetting('numCards'),
     ranks: ['a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q',
       'k'
     ],
     suits: ['diams', 'hearts', 'spades', 'clubs'],
     deck: [],
-    players: DEFAULT_PLAYERS.map(name => new Player(name)),
+    players: getSetting('players').map(name => new Player(name)),
     currPlayer: null,
     gameOver: false,
     winner: null,
+    darkMode: getSetting('darkMode')
   },
   created() {
     this.reset();
@@ -83,19 +99,19 @@ var app = new Vue({
 
       let cardsPerPlayerInput = document.getElementById("cardsPerPlayerInput");
       this.numCards = cardsPerPlayerInput.value;
+      localStorage.setItem('numCards', this.numCards);
 
       let playersInput = document.getElementById("playerNamesInput");
       Vue.set(this, 'players', []);
-      playersInput.value.trim().split("\n").forEach(playerName => {
+      let playerNames = playersInput.value.trim().split("\n");
+      playerNames.forEach(playerName => {
         Vue.set(this.players, this.players.length, new Player(playerName));
       });
+      localStorage.setItem('players', JSON.stringify(playerNames));
 
       let darkModeInput = document.getElementById("darkModeInput");
-      if (darkModeInput.checked) {
-        document.body.classList.add('darkMode');
-      } else {
-        document.body.classList.remove('darkMode');
-      }
+      this.darkMode = darkModeInput.checked;
+      localStorage.setItem('darkMode', darkModeInput.checked);
 
       this.reset();
     },
@@ -166,6 +182,18 @@ var app = new Vue({
       }
 
       return `Game over... <u>${this.winner.name}</u> won! &#x1F3C6;`;
+    }
+  },
+  watch: {
+    darkMode: {
+      immediate: true,
+      handler(darkModeOn) {
+        if (darkModeOn) {
+          document.body.classList.add('darkMode');
+        } else {
+          document.body.classList.remove('darkMode');
+        }
+      }
     }
   }
 });
