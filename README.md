@@ -1,17 +1,19 @@
-# Higher or Lower :black_joker:
+# Games :video_game:
 
-Multiplayer card game built using Vue.js.
+Browser games I've built for a variety of online events inspired by retro game shows.
 
-The rules can be found on the [site](https://higherorlower.rishk.me).
+I also use them as an opportunity to learn new technologies.
 
-Features include:
+## Play Your Cards Right :black_joker:
 
-  - Customisable number of players.
-  - Customisable cards per player.
-  - Dark mode.
-  - Ability to save settings.
+Card game built using Vue.js where players compete to correctly guess whether
+their next card will be higher or lower.
 
-Playing Card Design:
-[CSS-Playing-Cards](http://selfthinker.github.com/CSS-Playing-Cards/)
+Supports different settings and multiple players (only in the same browser).
 
-![Screenshot of the game](img/demo.png)
+[Play](https://games.rishk.me/play-your-cards-right/)
+ | [Features](play-your-cards-right/README.md)
+
+## The Price Is Right :money_with_wings:
+
+Currently being developed.
