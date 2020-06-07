@@ -1,0 +1,15 @@
+body,
+button {
+  font-family: monospace;
+}
+
+#app {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 20px;
+}
+
+#title {
+  text-align: center;
+}

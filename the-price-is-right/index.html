@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>The Price Is Right</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="css/main.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.2.0/peerjs.min.js"
+    integrity="sha256-Ya6g8SLqy1sNYWZaMQxji0BaxwSn3V5OA4vtJA7VdAw=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1 id="title">The Price Is Right &#x1F4B8;</h1>
+    <h2>Invite Players</h2>
+    <p>https://games.rishk.me/the-price-is-right/player?host={{ peer.id }}</p>
+    <h2>Lobby</h2>
+    <ul>
+      <li v-for="player in players">{{ player.name }}</li>
+    </ul>
+  </div>
+
+  <script src="js/host.js"></script>
+</body>
+
+</html>
