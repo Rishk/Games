@@ -7,7 +7,7 @@ function Player(name, conn) {
 var app = new Vue({
   el: '#app',
   data: {
-    peer: new Peer({host: "peer.rishk.me", port: 80, path: '/'}),
+    peer: new Peer({host: "peer.rishk.me", path: '/', secure: true}),
     players: {}
   },
   created() {

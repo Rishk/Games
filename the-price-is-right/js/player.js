@@ -3,7 +3,7 @@ const HOST_ID = window.location.href.split("host=")[1];
 var app = new Vue({
   el: '#app',
   data: {
-    peer: new Peer({host: "peer.rishk.me", port: 80, path: '/'}),
+    peer: new Peer({host: "peer.rishk.me", path: '/', secure: true}),
     conn: null,
     joined: false,
     leaderboard: []
