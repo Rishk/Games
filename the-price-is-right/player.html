@@ -19,10 +19,10 @@
     <h2>You've been invited to play!</h2>
     <form @submit="joinGame">
       <input id="nameInput" maxlength="30" placeholder="Please enter your name"
-        :disabled="joined">
-      <button :disabled="joined">Join</button>
+        :disabled="state != State.JOINING">
+      <button :disabled="state != State.JOINING">Join</button>
     </form>
-    <div v-if="joined">
+    <div v-if="state == State.JOINED">
       <h2>Lobby</h2>
       <ul>
         <li v-for="player in leaderboard">{{ player.name }}</li>
@@ -30,6 +30,7 @@
     </div>
   </div>
 
+  <script src="js/utils.js"></script>
   <script src="js/player.js"></script>
 </body>
 

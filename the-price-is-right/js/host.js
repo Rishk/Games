@@ -8,7 +8,8 @@ var app = new Vue({
   el: '#app',
   data: {
     peer: new Peer({host: "peer.rishk.me", path: '/', secure: true}),
-    players: {}
+    players: {},
+    started: false
   },
   created() {
     this.peer.on('connection', function(conn) {
@@ -21,12 +22,18 @@ var app = new Vue({
   },
   methods: {
     addPlayer(name, conn) {
+      if (this.started) {
+        sendData(conn, 'ERROR', 'Game has already started...');
+        return;
+      }
+
       Vue.set(this.players, conn.peer, new Player(name, conn));
+      sendData(conn, 'JOINED', {});
       this.sendLeaderboard();
     },
     broadcast(type, payload) {
       Object.entries(this.players).forEach(([_, player]) => {
-        player.conn.send({type: type, payload: payload});
+        sendData(player.conn, type, payload);
       });
     },
     sendLeaderboard() {
@@ -42,7 +49,7 @@ var app = new Vue({
     handleResponse(conn, data) {
       switch (data.type) {
         case 'JOIN':
-          this.addPlayer(data.payload.name, conn);
+          this.addPlayer(data.payload, conn);
           break;
       }
     }
