@@ -14,14 +14,19 @@ button {
   text-align: center;
 }
 
-.row {
-  display: flex;
+@media screen and (min-width: 600px) {
+  .row {
+    display: flex;
+  }
+
+  .container {
+    flex: 50%;
+  }
 }
 
 .container {
   padding-left: 10px;
   padding-right: 10px;
-  flex: 50%;
 }
 
 #player-table td, th {
@@ -35,6 +40,11 @@ button {
   border-radius: 10px;
   padding: 0px 10px;
   text-align: center
+}
+
+#item img {
+  max-width: 225px;
+  width: 100%;
 }
 
 #priceInput {
