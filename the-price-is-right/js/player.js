@@ -3,7 +3,8 @@ const HOST_ID = window.location.href.split("host=")[1];
 const State = {
   JOINING: 0,
   JOINED: 1,
-  STARTED: 2
+  NEW_ROUND: 2,
+  SUBMITTED: 3
 }
 
 var app = new Vue({
@@ -12,7 +13,8 @@ var app = new Vue({
     peer: new Peer({host: "peer.rishk.me", path: '/', secure: true}),
     conn: null,
     state: State.JOINING,
-    leaderboard: []
+    players: [],
+    currItem: {}
   },
   created() {
     this.peer.on('open', function(id) {
@@ -29,13 +31,40 @@ var app = new Vue({
       let name = document.getElementById("nameInput").value.trim();
       sendData(this.conn, 'JOIN', name);
     },
+    newRound(item) {
+      if (this.state == State.SUBMITTED) {
+        this.$refs.priceForm.reset();
+      }
+      this.state = State.NEW_ROUND;
+      this.currItem = item;
+    },
+    started() {
+      return this.state == State.NEW_ROUND || this.state == State.SUBMITTED;
+    },
+    submitGuess(e) {
+      e.preventDefault();
+      let priceRegex = /^[0-9]+(\.[0-9][0-9])?$/;
+      let guess = document.getElementById('priceInput').value;
+      if (!guess.match(priceRegex)) {
+        alert("Please enter a valid price.");
+        return;
+      }
+      sendData(this.conn, 'GUESS', parseFloat(guess));
+      this.state = State.SUBMITTED;
+    },
     handleResponse(data) {
       switch (data.type) {
-        case 'LEADERBOARD':
-          this.leaderboard = data.payload;
+        case 'PLAYERS':
+          this.players = data.payload;
           break;
         case 'JOINED':
           this.state = State.JOINED;
+          break;
+        case 'NEW_ROUND':
+          this.newRound(data.payload);
+          break;
+        case 'ANSWER':
+          Vue.set(this.currItem, 'price', data.payload);
           break;
         case 'ERROR':
           alert(data.payload);

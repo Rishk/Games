@@ -13,3 +13,30 @@ button {
 #title {
   text-align: center;
 }
+
+.row {
+  display: flex;
+}
+
+.container {
+  padding-left: 10px;
+  padding-right: 10px;
+  flex: 50%;
+}
+
+#player-table td, th {
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+}
+
+#item {
+  border: gray 1px solid;
+  border-radius: 10px;
+  padding: 0px 10px;
+  text-align: center
+}
+
+#priceInput {
+  width: 50px;
+}

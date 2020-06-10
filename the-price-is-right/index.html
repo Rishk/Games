@@ -16,12 +16,48 @@
 <body>
   <div id="app">
     <h1 id="title">The Price Is Right &#x1F4B8;</h1>
-    <h2>Invite Players</h2>
-    <p>https://games.rishk.me/the-price-is-right/player?host={{ peer.id }}</p>
-    <h2>Lobby</h2>
-    <ul>
-      <li v-for="player in players">{{ player.name }}</li>
-    </ul>
+    <div v-if="!started">
+      <h2>Invite Players</h2>
+      <p>https://games.rishk.me/the-price-is-right/player?host={{ peer.id }}</p>
+      <h2>Lobby</h2>
+      <ul>
+        <li v-for="player in players">{{ player.name }}</li>
+      </ul>
+      <button v-on:click="startGame()">Start</button>
+    </div>
+    <div v-if="started">
+      <div class="row">
+        <div id="items" class="container">
+          <h2>Current Item</h2>
+          <div id="item">
+            <h3>{{ currItem.name }}</h3>
+            <h3><u v-html="formatPrice(currItem.price)"></u></h3>
+            <p><button v-on:click="newRound()" :disabled="!allGuessed()">Next
+                Round</button></p>
+            <img :src="currItem.imageURL" />
+          </div>
+        </div>
+        <div id="players" class="container">
+          <h2>Players</h2>
+          <table id="player-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Guess</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="player in players">
+                <td>{{ player.name }}</td>
+                <td>{{ player.score }}</td>
+                <td v-html="formatPrice(player.guess)"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="js/utils.js"></script>
