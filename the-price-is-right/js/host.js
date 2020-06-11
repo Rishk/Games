@@ -90,7 +90,7 @@ var app = new Vue({
         sendData(player.conn, type, payload);
       });
     },
-    sendPlayerData() {
+    getLeaderboard() {
       let leaderboard = [];
       Object.entries(this.players).forEach(([_, player]) => {
         leaderboard.push({name:  player.name,
@@ -100,7 +100,10 @@ var app = new Vue({
       leaderboard.sort((a, b) => {
         return b.score - a.score;
       });
-      this.broadcast('PLAYERS', leaderboard);
+      return leaderboard;
+    },
+    sendPlayerData() {
+      this.broadcast('PLAYERS', this.getLeaderboard());
     },
     handleResponse(conn, data) {
       switch (data.type) {
