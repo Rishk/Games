@@ -18,7 +18,7 @@ Supports different settings and multiple players (only in the same browser).
 
 Multiplayer game built using WebRTC where players compete to guess the value of everyday retail items.
 
-Currently uses product data from Tesco.
+Currently uses over 200 of the most popular products from Tesco.
 
 [Play](https://games.rishk.me/the-price-is-right/)
  | [Features](the-price-is-right/README.md)
