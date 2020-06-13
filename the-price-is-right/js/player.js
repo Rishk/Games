@@ -1,10 +1,11 @@
 const HOST_ID = window.location.href.split("host=")[1];
 
 const State = {
-  JOINING: 0,
-  JOINED: 1,
-  NEW_ROUND: 2,
-  SUBMITTED: 3
+  CONNECTING: 0,
+  JOINING:    1,
+  JOINED:     2,
+  NEW_ROUND:  3,
+  SUBMITTED:  4
 }
 
 var app = new Vue({
@@ -12,13 +13,16 @@ var app = new Vue({
   data: {
     peer: new Peer({host: "peer.rishk.me", path: '/', secure: true}),
     conn: null,
-    state: State.JOINING,
+    state: State.CONNECTING,
     players: [],
     currItem: {}
   },
   created() {
     this.peer.on('open', function(id) {
       app.conn = app.peer.connect(HOST_ID);
+      app.conn.on('open', function() {
+        app.state = State.JOINING;
+      });
       app.conn.on('data', function(data) {
         app.handleResponse(data);
       });
