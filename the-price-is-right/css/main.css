@@ -1,5 +1,6 @@
 body,
-button {
+button,
+input {
   font-family: monospace;
 }
 
@@ -49,4 +50,8 @@ button {
 
 #priceInput {
   width: 50px;
+}
+
+#nameInput {
+  width: 175px;
 }
