@@ -4,17 +4,21 @@ function Player(name, conn) {
   this.score = 0;
   this.guess = null;
   this.getDifference = function(actual) {
-    return Math.abs(this.guess - actual).toFixed(2);
+    return parseFloat(Math.abs(this.guess - actual).toFixed(2));
   }
 }
 
-function getRandomProduct() {
-  return {
-    name: 'Tesco Organic Fair Trade Bananas 5 Pack',
-    price: 1.34,
-    imageURL: 'https://img.tesco.com/Groceries/pi/148/0000003341148/IDShot_225x225.jpg'
-  };
+async function getRandomProduct() {
+  let output = {}
+  let data = await fetch("https://products.rishk.me")
+  .then(res => res.json())
+  .catch(err => { throw err });
+  output.name = data.Name;
+  output.price = parseFloat(data.Price);
+  output.imageURL = data.ImageURL;
+  return output;
 }
+
 
 var app = new Vue({
   el: '#app',
@@ -62,14 +66,16 @@ var app = new Vue({
       return this.guesses == Object.keys(this.players).length;
     },
     newRound() {
-      this.currItem = getRandomProduct();
       this.guesses = 0;
       Object.entries(this.players).forEach(([_, player]) => {
         Vue.set(player, 'guess', null);
       });
       this.sendPlayerData();
-      this.broadcast('NEW_ROUND', {name: this.currItem.name,
-                                   imageURL: this.currItem.imageURL});
+      getRandomProduct().then(data => {
+        this.currItem = data
+        this.broadcast('NEW_ROUND', {name: this.currItem.name,
+                                     imageURL: this.currItem.imageURL});
+      });
     },
     endRound() {
       let price = this.currItem.price;
