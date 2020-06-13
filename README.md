@@ -16,4 +16,9 @@ Supports different settings and multiple players (only in the same browser).
 
 ## The Price Is Right :money_with_wings:
 
-Currently being developed.
+Multiplayer game built using WebRTC where players compete to guess the value of everyday retail items.
+
+Currently uses product data from Tesco.
+
+[Play](https://games.rishk.me/the-price-is-right/)
+ | [Features](the-price-is-right/README.md)
