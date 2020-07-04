@@ -18,7 +18,8 @@
     <h1 id="title">The Price Is Right &#x1F4B8;</h1>
     <div v-if="!started">
       <h2>Invite Players</h2>
-      <p>https://games.rishk.me/the-price-is-right/player?host={{ peer.id }}</p>
+      <p>{{ getInviteURL() }}</p>
+      <button v-on:click="copyInviteURL()">Copy Link</button>
       <h2>Lobby</h2>
       <ul>
         <li v-for="player in players">{{ player.name }}</li>

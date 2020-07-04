@@ -1,3 +1,5 @@
+const BASE_URL = "https://games.rishk.me/the-price-is-right"
+
 function Player(name, conn) {
   this.name = name;
   this.conn = conn;
@@ -19,6 +21,14 @@ async function getRandomProduct() {
   return output;
 }
 
+function copyToClipboard(text) {
+  let input_elem = document.createElement("input");
+  document.body.appendChild(input_elem);
+  input_elem.setAttribute("value", text);
+  input_elem.select();
+  document.execCommand("copy");
+  document.body.removeChild(input_elem);
+}
 
 var app = new Vue({
   el: '#app',
@@ -39,6 +49,12 @@ var app = new Vue({
     });
   },
   methods: {
+    getInviteURL() {
+      return `${BASE_URL}/player?host=${this.peer.id}`;
+    },
+    copyInviteURL() {
+      copyToClipboard(this.getInviteURL());
+    },
     addPlayer(name, conn) {
       if (this.started) {
         sendData(conn, 'ERROR', 'Game has already started...');
